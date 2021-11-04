@@ -31,7 +31,7 @@ game_over = font.render("Game Over", True, BLACK)
 background = pygame.image.load("AnimatedStreet.png")
 
 #Create a white screen 
-DISPLAYSURF = pygame.display.set_mode((400,600))
+DISPLAYSURF = pygame.display.set_mode((800,600))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
@@ -51,7 +51,20 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
+class Enemy2(pygame.sprite.Sprite):
+      def __init__(self):
+        super().__init__() 
+        self.image = pygame.image.load("Enemy.png")
+        self.rect = self.image.get_rect()
+        self.rect.center = (random.randint(SCREEN_WIDTH + 40,2 * SCREEN_WIDTH-40), 0)
 
+      def move(self):
+        global SCORE
+        self.rect.move_ip(0,SPEED)
+        if (self.rect.bottom > 600):
+            SCORE += 1
+            self.rect.top = 0
+            self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
@@ -73,7 +86,7 @@ class Player(pygame.sprite.Sprite):
 #Setting up Sprites        
 P1 = Player()
 E1 = Enemy()
-E2 = Enemy()
+E2 = Enemy2()
 
 #Creating Sprites Groups
 enemies = pygame.sprite.Group()
@@ -101,6 +114,7 @@ while True:
 
 
     DISPLAYSURF.blit(background, (0,0))
+    DISPLAYSURF.blit(background, (400,0))
     scores = font_small.render(str(SCORE), True, BLACK)
     DISPLAYSURF.blit(scores, (10,10))
 
