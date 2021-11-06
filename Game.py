@@ -21,12 +21,14 @@ WHITE = (255, 255, 255)
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 SPEED = 5
-SCORE = 0
+SCORE_Player1 = 0
+SCORE_Player2 = 0
 
 #Setting up Fonts
 font = pygame.font.SysFont("Verdana", 60)
 font_small = pygame.font.SysFont("Verdana", 20)
-game_over = font.render("Game Over", True, BLACK)
+p1_win = font.render("Player 1 Won", True, BLACK)
+p2_win = font.render("Player 2 Won", True, BLACK)
 
 background = pygame.image.load("AnimatedStreet.png")
 
@@ -44,10 +46,10 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.center = (random.randint(40,SCREEN_WIDTH-40), 0)
 
       def move(self):
-        global SCORE
+        global SCORE_Player1
         self.rect.move_ip(0,SPEED)
         if (self.rect.bottom > 600):
-            SCORE += 1
+            SCORE_Player1 += 1
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
 
@@ -56,15 +58,15 @@ class Enemy2(pygame.sprite.Sprite):
         super().__init__() 
         self.image = pygame.image.load("Enemy.png")
         self.rect = self.image.get_rect()
-        self.rect.center = (random.randint(SCREEN_WIDTH + 40,2 * SCREEN_WIDTH-40), 0)
+        self.rect.center = (random.randint(SCREEN_WIDTH + 40,800-40), 0)
 
       def move(self):
-        global SCORE
+        global SCORE_Player2
         self.rect.move_ip(0,SPEED)
         if (self.rect.bottom > 600):
-            SCORE += 1
+            SCORE_Player2 += 1
             self.rect.top = 0
-            self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+            self.rect.center = (random.randint(SCREEN_WIDTH+40, 800 - 40), 0)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
@@ -81,10 +83,27 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right < SCREEN_WIDTH:        
               if pressed_keys[K_RIGHT]:
                   self.rect.move_ip(10, 0)
+class Player2(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__() 
+        self.image = pygame.image.load("Player.png")
+        self.rect = self.image.get_rect()
+        self.rect.center = (560, 520)
+       
+    def move(self):
+        pressed_keys = pygame.key.get_pressed()
+        
+        if self.rect.left > SCREEN_WIDTH:
+              if pressed_keys[K_a]:
+                  self.rect.move_ip(-10, 0)
+        if self.rect.right < 2 * SCREEN_WIDTH:        
+              if pressed_keys[K_d]:
+                  self.rect.move_ip(10, 0)
                   
 
 #Setting up Sprites        
 P1 = Player()
+P2 = Player2()
 E1 = Enemy()
 E2 = Enemy2()
 
@@ -94,6 +113,7 @@ enemies.add(E1)
 enemies.add(E2)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(P1)
+all_sprites.add(P2)
 all_sprites.add(E1)
 all_sprites.add(E2)
 
@@ -115,8 +135,10 @@ while True:
 
     DISPLAYSURF.blit(background, (0,0))
     DISPLAYSURF.blit(background, (400,0))
-    scores = font_small.render(str(SCORE), True, BLACK)
-    DISPLAYSURF.blit(scores, (10,10))
+    scores_player1 = font_small.render(str(SCORE_Player1), True, BLACK)
+    DISPLAYSURF.blit(scores_player1, (10,10))
+    scores_player2 = font_small.render(str(SCORE_Player1), True, BLACK)
+    DISPLAYSURF.blit(scores_player2, (750,10))
 
     #Moves and Re-draws all Sprites
     for entity in all_sprites:
@@ -130,14 +152,27 @@ while True:
           time.sleep(1)
                    
           DISPLAYSURF.fill(RED)
-          DISPLAYSURF.blit(game_over, (30,250))
+          DISPLAYSURF.blit(p2_win, (60,250))
           
           pygame.display.update()
           for entity in all_sprites:
                 entity.kill() 
           time.sleep(2)
           pygame.quit()
-          sys.exit()        
+          sys.exit()
+    if pygame.sprite.spritecollideany(P2, enemies):
+          pygame.mixer.Sound('crash.wav').play()
+          time.sleep(1)
+                   
+          DISPLAYSURF.fill(RED)
+          DISPLAYSURF.blit(p1_win, (60,250))
+          
+          pygame.display.update()
+          for entity in all_sprites:
+                entity.kill() 
+          time.sleep(2)
+          pygame.quit()
+          sys.exit()    
         
     pygame.display.update()
     FramePerSec.tick(FPS)
