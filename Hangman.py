@@ -5,8 +5,8 @@ wrdplce = 0
 number = 58110
 file = open("EveryWordInTheEnglishLanguage.txt", "r")
 string = file.read()
-list = string.split("\n")
-word = list[r.randint(0, number)]
+list1 = string.split("\n")
+word = list1[r.randint(0, number)]
 for i in word:
     wordlength += 1
 prnt = "_" * wordlength
@@ -15,6 +15,8 @@ while prnt != word:
     letter = input()
     for y in word:
         if letter == y:
-            prnt = prnt.replace(wrdplce, word[wrdplce])
+            new = list(prnt)
+            new[wrdplce] = word[wrdplce]
+            prnt = "".join(new)
         wrdplce += 1
 
