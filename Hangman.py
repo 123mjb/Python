@@ -1,5 +1,11 @@
 import random as r
+import tkinter as tk
 
+
+wrongs = 0
+hangman = ""
+hangmen = []
+updatehangman = 0
 wordlength = 0
 wrdplce = 0
 number = 58110
@@ -18,5 +24,12 @@ while prnt != word:
             new = list(prnt)
             new[wrdplce] = word[wrdplce]
             prnt = "".join(new)
+        else:
+            wrongs += 1 
         wrdplce += 1
+    if wrongs == wordlength:
+        updatehangman+=1
+    wrongs = 0
+    for j in updatehangman:
+        hangman += hangmen[j]
 
