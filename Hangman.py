@@ -3,9 +3,27 @@ import tkinter as tk
 
 
 wrongs = 0
+pront = ""
 hangman = ""
-hangmen = []
-updatehangman = 0
+hangmen = [
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " ", 
+]
+h = [
+    "+", "-", "-", "+", " ", 
+    "|", " ", " ", "|", " ", 
+    "|", " ", " ", "0", " ", 
+    "|", " ", "/", "|", "\\", 
+    "|", " ", "/", " ", "\\", 
+    "|", " ", " ", " ", " ", 
+    "+", "-", "-", "-", "+", 
+]
+uh = 0
 wordlength = 0
 wrdplce = 0
 number = 58110
@@ -28,8 +46,19 @@ while prnt != word:
             wrongs += 1 
         wrdplce += 1
     if wrongs == wordlength:
-        updatehangman+=1
+        uh+=1
     wrongs = 0
-    for j in updatehangman:
-        hangman += hangmen[j]
+    if uh == 1:
+        for j in range(31, 35):
+            hangmen[j] = h[j]
+    elif uh == 2:
+        hangmen[1] = h[1]
+        hangmen[6] = h[6]
+        hangmen[11] = h[11]
+        hangmen[16] = h[16]
+        hangmen[21] = h[21]
+        hangmen[26] = h[26]
+        
+    for k in range(1, 35): pront += hangmen[k]
+    
 
