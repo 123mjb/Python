@@ -1,27 +1,26 @@
 import random as r
-import tkinter as tk
+import sys
 
 
 wrongs = 0
 pront = ""
-hangman = ""
 hangmen = [
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
-    " ", " ", " ", " ", " ", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
+    " ", " ", " ", " ", " \n", 
 ]
 h = [
-    "+", "-", "-", "+", " ", 
-    "|", " ", " ", "|", " ", 
-    "|", " ", " ", "0", " ", 
-    "|", " ", "/", "|", "\\", 
-    "|", " ", "/", " ", "\\", 
-    "|", " ", " ", " ", " ", 
-    "+", "-", "-", "-", "+", 
+    "+", "-", "-", "+", " \n", 
+    "|", " ", " ", "|", " \n", 
+    "|", " ", " ", "0", " \n", 
+    "|", " ", "/", "|", "\\\n", 
+    "|", " ", "/", " ", "\\\n", 
+    "|", " ", " ", " ", " \n", 
+    "+", "-", "-", "-", "+\n", 
 ]
 uh = 0
 wordlength = 0
@@ -45,20 +44,42 @@ while prnt != word:
         else:
             wrongs += 1 
         wrdplce += 1
+    wrdplce = 0
     if wrongs == wordlength:
         uh+=1
     wrongs = 0
-    if uh == 1:
-        for j in range(31, 35):
+    if uh == 1: # bottom plank
+        for j in range(30, 35):
             hangmen[j] = h[j]
-    elif uh == 2:
+    elif uh == 2: # side plank
+        hangmen[0] = h[0]
+        hangmen[5] = h[5]
+        hangmen[10] = h[10]
+        hangmen[15] = h[15]
+        hangmen[20] = h[20]
+        hangmen[25] = h[25]
+    elif uh == 3: # top plank
         hangmen[1] = h[1]
-        hangmen[6] = h[6]
-        hangmen[11] = h[11]
-        hangmen[16] = h[16]
-        hangmen[21] = h[21]
-        hangmen[26] = h[26]
-        
-    for k in range(1, 35): pront += hangmen[k]
-    
-
+        hangmen[2] = h[2]
+        hangmen[3] = h[3]
+    elif uh == 4: # rope
+        hangmen[8] = h[8]
+    elif uh == 5: # head
+        hangmen[13] = h[13]
+    elif uh == 6: # torso
+        hangmen[18] = h[18]
+    elif uh == 7: # left arm
+        hangmen[17] = h[17]
+    elif uh == 8: # right arm
+        hangmen[19] = h[19]
+    elif uh == 9: # left leg
+        hangmen[22] = h[22]
+    elif uh == 10: # right leg
+        hangmen[24] = h[24]
+    for o in hangmen:
+        pront += o
+    print(pront)
+    pront = ""
+    if hangmen == h:
+        print("You lost!")
+        sys.exit
