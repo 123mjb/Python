@@ -1,7 +1,6 @@
 import random as r
 import sys
 
-
 wrongs = 0
 pront = ""
 hangmen = [
@@ -24,7 +23,6 @@ h = [
 ]
 uh = 0
 wordlength = 0
-wrdplce = 0
 number = 58110
 file = open("EveryWordInTheEnglishLanguage.txt", "r")
 string = file.read()
@@ -34,6 +32,7 @@ for i in word:
     wordlength += 1
 prnt = "_" * wordlength
 while prnt != word:
+    wrdplce = 0
     print(prnt)
     letter = input()
     for y in word:
@@ -44,7 +43,6 @@ while prnt != word:
         else:
             wrongs += 1 
         wrdplce += 1
-    wrdplce = 0
     if wrongs == wordlength:
         uh+=1
     wrongs = 0
@@ -52,16 +50,9 @@ while prnt != word:
         for j in range(30, 35):
             hangmen[j] = h[j]
     elif uh == 2: # side plank
-        hangmen[0] = h[0]
-        hangmen[5] = h[5]
-        hangmen[10] = h[10]
-        hangmen[15] = h[15]
-        hangmen[20] = h[20]
-        hangmen[25] = h[25]
+        for j in range(0, 30, 5): hangmen[j] = h[j]     
     elif uh == 3: # top plank
-        hangmen[1] = h[1]
-        hangmen[2] = h[2]
-        hangmen[3] = h[3]
+        for j in range(1, 4): hangmen[j] = h[j]
     elif uh == 4: # rope
         hangmen[8] = h[8]
     elif uh == 5: # head
@@ -80,6 +71,6 @@ while prnt != word:
         pront += o
     print(pront)
     pront = ""
-    if hangmen == h:
-        print("You lost!")
+    if uh == 10: 
+        print("You failed!")
         sys.exit
