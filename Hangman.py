@@ -22,6 +22,7 @@ h = [
     "+", "-", "-", "-", "+\n", 
 ]
 uh = 0
+guesses = 0
 wordlength = 0
 number = 58110
 file = open("EveryWordInTheEnglishLanguage.txt", "r")
@@ -71,6 +72,16 @@ while prnt != word:
         pront += o
     print(pront)
     pront = ""
+    guesses += 1
     if uh == 10: 
         print("You failed!")
-        sys.exit
+        return
+if prnt = word:
+    print("You won, wow. With " + guesses + " guesses.")
+else:
+    uh = 0
+    guesses = 0
+    wordlength = 0
+    pront = ""
+
+    
