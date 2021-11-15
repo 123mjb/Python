@@ -75,8 +75,8 @@ while prnt != word:
     guesses += 1
     if uh == 10: 
         print("You failed!")
-        return
-if prnt = word:
+        break
+if prnt == word:
     print("You won, wow. With " + guesses + " guesses.")
 else:
     uh = 0
