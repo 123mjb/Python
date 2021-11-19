@@ -14,4 +14,4 @@ pygame.display.set_caption("Circles")
 
 while True:
     for i in range(5, 395, 5):
-        pygame.draw.circle(DISPLAYSURF, BLACK, (int(i), 5), 5, 1)
+        pygame.draw.circle(DISPLAYSURF, BLACK, (i, 5), 5, 1)
