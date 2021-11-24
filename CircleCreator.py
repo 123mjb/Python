@@ -15,35 +15,35 @@ randcirclesy = 0
 randcirclesx = 0
 randcircleslistx = []
 randcircleslisty = []
+fails = 0
 
 DISPLAYSURF = pygame.display.set_mode((800,600))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Circles")
 
 def randcircles():
-    global test1, test2, randcircleslistx, randcircleslisty, randcirclesx, randcirclesy
+    global test1, test2, randcircleslistx, randcircleslisty, randcirclesx, randcirclesy, fails
     for p in range(0, 100):
         test1 = True
         test2 = True
         while test1 or test2:
             test1 = False
             test2 = False
-            randcirclesy = random.randrange(0, 600)
-            randcirclesx = random.randrange(0, 800)
+            randcirclesy = random.randrange(5, 596)
+            randcirclesx = random.randrange(5, 796)
             for h in randcircleslistx:
-                if randcirclesx == h-5 or randcirclesx == h+5:
+                if randcirclesx > h-5 and randcirclesx < h+5:
                     test1 = True
-                else:
-                    test1 = False
             for t in randcircleslisty:
-                if randcirclesy==t-5 or randcirclesy==t+5:
+                if randcirclesy > t-5 and randcirclesy < t+5:
                     test2 = True
-                else:
-                    test2 = False
             print(randcirclesx, randcirclesy)
-        
-        randcircleslistx.append(randcirclesx)
-        randcircleslisty.append(randcirclesy)
+            fails += 1
+            if fails == 200: break
+        if fails != 200:
+            randcircleslistx.append(randcirclesx)
+            randcircleslisty.append(randcirclesy)
+        fails = 0
         randcirclesx=0
         randcirclesy=0
     print(randcircleslistx)
@@ -58,7 +58,7 @@ while True:
     """for j in range(5, 605, 10):
         for i in range(5, 805, 10):
             pygame.draw.circle(DISPLAYSURF, BLACK, (i, j), 5, 1)  """
-    for o in range(0, 100):
+    for o in range(0, len(randcircleslistx)):
         pygame.draw.circle(DISPLAYSURF, BLACK, (randcircleslistx[o], randcircleslisty[o]), 5, 1)
 
     pygame.display.update()
