@@ -23,31 +23,27 @@ pygame.display.set_caption("Circles")
 
 def randcircles():
     global test1, test2, randcircleslistx, randcircleslisty, randcirclesx, randcirclesy, fails
-    for p in range(0, 100):
-        test1 = True
-        test2 = True
-        while test1 or test2:
-            test1 = False
-            test2 = False
-            randcirclesy = random.randrange(5, 596)
-            randcirclesx = random.randrange(5, 796)
+    for p in range(0, 200):
+        test1 = False
+        test2 = False
+        while not test1 and not test2:
+            test1 = True
+            test2 = True
+            randcirclesy = random.randrange(5, 595, 5)
+            randcirclesx = random.randrange(5, 795, 5)
             for h in randcircleslistx:
                 if randcirclesx > h-5 and randcirclesx < h+5:
-                    test1 = True
+                    test1 = False
             for t in randcircleslisty:
                 if randcirclesy > t-5 and randcirclesy < t+5:
-                    test2 = True
+                    test2 = False
             print(randcirclesx, randcirclesy)
             fails += 1
             if fails == 200: break
-        if fails != 200:
-            randcircleslistx.append(randcirclesx)
-            randcircleslisty.append(randcirclesy)
-        fails = 0
-        randcirclesx=0
-        randcirclesy=0
-    print(randcircleslistx)
-    print(randcircleslisty)    
+        if fails != 200: randcircleslistx.append(randcirclesx), randcircleslisty.append(randcirclesy)
+        fails, randcirclesx, randcirclesy = 0,0,0
+    print(randcircleslistx, len(randcircleslistx))
+    print(randcircleslisty, len(randcircleslisty))    
 randcircles()
 
 while True:
