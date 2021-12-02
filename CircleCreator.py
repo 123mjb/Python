@@ -1,4 +1,5 @@
 import pygame, sys, random
+from pygame import display
 from pygame.locals import *
 
 pygame.init()
@@ -43,7 +44,7 @@ def randcircles():
         if fails != 200: randcircleslistx.append(randcirclesx), randcircleslisty.append(randcirclesy)
         fails, randcirclesx, randcirclesy = 0,0,0
     print(randcircleslistx, len(randcircleslistx))
-    print(randcircleslisty, len(randcircleslisty))    
+    print(randcircleslisty, len(randcircleslisty))   
 randcircles()
 
 while True:
