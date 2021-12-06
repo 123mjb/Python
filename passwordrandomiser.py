@@ -9,3 +9,4 @@ for l in text:
 for o in password:
     new += str(diction[o])
 print(new)
+print(diction)
