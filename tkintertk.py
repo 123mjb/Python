@@ -8,20 +8,23 @@ def openNewWindow():
     newWindow = Toplevel(root)
     frm2=ttk.Frame(newWindow, padding=10)
     frm2.grid()
+    enter = ttk.Entry(frm2)
     newWindow.title("New Window")
-    newWindow.geometry("200x200")
-    def getSquareRoot ():  
-        x1 = entry1.get()
-
-        label1 = tk.Label(root, text= float(x1)**0.5)
-        canvas1.create_window(200, 230, window=label1)
+    newWindow.geometry("150x100")
     def multiplication():
         num1, num2 = r.randrange(1, 10), r.randrange(1, 10)
         txt=num1,"X",num2
         ttk.Label(frm2, text=txt).grid(column=0, row=0)
-        entry1 = ttk.Entry(frm2) 
-        newWindow.create_window(200, 140, window=entry1)
-        button1 = ttk.Button(text='Get the Square Root', command=getSquareRoot)
+        enter.grid(column=0, row=1)
+        def getinp():
+            i = enter.get()
+            if i == num1 * num2:
+                ttk.Label(frm2, text="Right!").grid(column=0, row=4)
+                multiplication()
+            else:
+                ttk.Label(frm2, text="Wrong").grid(column=0, row=4)
+        btn = ttk.Button(frm2, text='Enter', command=getinp())
+        btn.grid(column=0, row=3)
     Label(newWindow,
           multiplication()).pack()
 ttk.Label(frm, text="Hello").grid(column=0, row=0)
