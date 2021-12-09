@@ -11,7 +11,7 @@ def openNewWindow():
     enter = ttk.Entry(frm2)
     newWindow.title("New Window")
     newWindow.geometry("150x100")
-    Label(newWindow,ttk.Button(frm2, text="Load", command=multiplication()).grid(column=0, row=0)).pack()
+    Label(newWindow, openNewWindow()).pack()
 def crash():
     while True:
         openNewWindow()
