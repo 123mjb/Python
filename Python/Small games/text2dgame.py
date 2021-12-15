@@ -64,7 +64,6 @@ def moveblock(direct):
         moveblockpos+=direct
         level1[moveblockpos]="⛾ "
         answer = True
-        print(direct)
     else:
         answer = False
     return answer
