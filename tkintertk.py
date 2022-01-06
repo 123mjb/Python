@@ -21,13 +21,13 @@ def openNewWindow():
                 i = enter.get()
             except: 
                 return EXCEPTION
-            if i != None:
+            if i != "":
                 if int(i) == num1 * num2:
                     ttk.Label(frm2, text="Right!").grid(column=0, row=5)
                 else:
                     ttk.Label(frm2, text="Wrong").grid(column=0, row=5)
         ttk.Button(frm2, text='Enter', command=getinp()).grid(column=0, row=4) 
-    Label(newWindow,ttk.Button(frm2, text="Load", command=multiplication()).grid(column=0, row=0)).pack()
+    Label(newWindow,ttk.Button(frm2, text="Load", command=multiplication()).grid(column=0, row=0))
 ttk.Label(frm, text="Hello").grid(column=0, row=0)
 ttk.Label(frm, text="World!").grid(column=0, row=1)
 ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
