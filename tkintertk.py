@@ -17,15 +17,11 @@ def openNewWindow():
         ttk.Label(frm2,text=txt).grid(column=0, row=1)
         enter.grid(column=0, row=2)
         def getinp():
-            try: 
-                i = enter.get()
-            except: 
-                return EXCEPTION
+            try: i = enter.get()
+            except: return EXCEPTION
             if i != "":
-                if int(i) == num1 * num2:
-                    ttk.Label(frm2, text="Right!").grid(column=0, row=5)
-                else:
-                    ttk.Label(frm2, text="Wrong").grid(column=0, row=5)
+                if int(i) == num1 * num2:ttk.Label(frm2, text="Right!").grid(column=0, row=5)
+                else:ttk.Label(frm2, text="Wrong").grid(column=0, row=5)
         ttk.Button(frm2, text='Enter', command=getinp()).grid(column=0, row=4) 
     Label(newWindow,ttk.Button(frm2, text="Load", command=multiplication()).grid(column=0, row=0))
 ttk.Label(frm, text="Hello").grid(column=0, row=0)
