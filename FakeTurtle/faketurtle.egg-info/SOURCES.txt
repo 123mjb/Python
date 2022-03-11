@@ -1,0 +1,8 @@
+README.md
+setup.py
+FakeTurtle/__init__.py
+FakeTurtle/myfunctions.py
+faketurtle.egg-info/PKG-INFO
+faketurtle.egg-info/SOURCES.txt
+faketurtle.egg-info/dependency_links.txt
+faketurtle.egg-info/top_level.txt
