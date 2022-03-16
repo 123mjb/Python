@@ -1,6 +1,7 @@
 import pygame
 from pygame import *
 import random as r
+import time
 pygame.init()
 DISPLAY_SIZE = pygame.display.get_desktop_sizes()[0]
 LIST_DISPLAY_SIZE = list(DISPLAY_SIZE)
@@ -8,7 +9,17 @@ DISPLAYSURF = pygame.display.set_mode(tuple(map(lambda i, j: i - j, DISPLAY_SIZE
 # pygame.display.toggle_fullscreen()
 WHITE = pygame.Color(255,255,255) 
 BLACK = pygame.Color(0,0,0)
-DISPLAYSURF
+colourused = 0
+COLOURS=[
+    pygame.Color(0,0,0),
+    pygame.Color(255,255,255),
+    pygame.Color(255,0,0),
+    pygame.Color(0,255,0),
+    pygame.Color(0,0,255),
+    pygame.Color(255,255,0),
+    pygame.Color(255,0,255),
+    pygame.Color(0,255,255),
+]
 # pygame.FULLSCREEN
 print(tuple(map(lambda i, j: i - j, pygame.display.get_desktop_sizes()[0], (10,10))))
 turtle = (0,0)
@@ -21,6 +32,7 @@ M_a=False
 M_s=False
 M_d=False
 randommove=False
+size=5
 
 def turtle_randommove():
     move = r.randrange(0,3)
@@ -34,6 +46,7 @@ def turtle_randommove():
         M_d = True
 
 def turtle_move(turtle1):
+    global M_a,M_d,M_s,M_w
     pressed_keys = pygame.key.get_pressed()
     if pressed_keys[K_a]or M_a==True:
         t=list(turtle1)
@@ -57,7 +70,29 @@ def turtle_move(turtle1):
         turtle1=tuple(t)
     return turtle1
 def turtle_display(turtle2):
-    pygame.draw.rect(DISPLAYSURF,BLACK,(list(turtle2)[0],list(turtle2)[1],5,5),0)
+    pygame.draw.rect(DISPLAYSURF,COLOURS[colourused],(list(turtle2)[0],list(turtle2)[1],size,size),0)
+def colourchanging():
+    global colourused, pressed_keys
+    if pressed_keys[K_1]:
+        colourused = 0
+    if pressed_keys[K_2]:
+        colourused = 1
+    if pressed_keys[K_3]:
+        colourused = 2
+    if pressed_keys[K_4]:
+        colourused = 3
+    if pressed_keys[K_5]:
+        colourused = 4
+    if pressed_keys[K_6]:
+        colourused = 5
+    if pressed_keys[K_7]:
+        colourused = 6
+    if pressed_keys[K_8]:
+        colourused = 7
+    if pressed_keys[K_9]:
+        colourused = 8
+    if pressed_keys[K_0]:
+        colourused = 9
 DISPLAYSURF.fill(WHITE)
 
 running  = True
@@ -67,8 +102,19 @@ while running:
     if pressed_keys[K_i]: 
         if randommove: randommove=False
         elif not randommove: randommove=True
-    if randommove: turtle_randommove()
+        time.sleep(1)
+    if randommove:
+        move = r.randrange(0,4)
+        if move == 0:
+            M_w = True
+        elif move == 1:
+            M_a = True
+        elif move == 2:
+            M_s = True
+        elif move == 3:
+            M_d = True
     # DISPLAYSURF.fill(WHITE)
+    colourchanging()
     turtle = turtle_move(turtle)
     turtle_display(turtle)
     for event in pygame.event.get():  
@@ -79,7 +125,13 @@ while running:
         DISPLAYSURF.fill(WHITE)
     if pressed_keys[K_c]:
         DISPLAYSURF.fill(WHITE)
+    if pressed_keys[K_UP] and size<100:
+        size+=1
+        time.sleep(0.125)
+    if pressed_keys[K_DOWN] and size>0:
+        size-=1
+        time.sleep(0.125)
     pygame.display.update()
-    print(M_w,M_a,M_s,M_d)
+    print(M_w,M_a,M_s,M_d, move)
     M_w,M_a,M_s,M_d= False,False,False,False
     # print(turtle)
