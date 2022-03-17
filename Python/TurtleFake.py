@@ -7,9 +7,11 @@ DISPLAY_SIZE = pygame.display.get_desktop_sizes()[0]
 LIST_DISPLAY_SIZE = list(DISPLAY_SIZE)
 DISPLAYSURF = pygame.display.set_mode(tuple(map(lambda i, j: i - j, DISPLAY_SIZE, (2,60))),pygame.RESIZABLE)
 # pygame.display.toggle_fullscreen()
+font = pygame.font.SysFont('Tahoma', 30, False, False)
 WHITE = pygame.Color(255,255,255) 
 BLACK = pygame.Color(0,0,0)
 colourused = 0
+clicking=False
 COLOURS=[
     pygame.Color(0,0,0),
     pygame.Color(255,255,255),
@@ -19,6 +21,8 @@ COLOURS=[
     pygame.Color(255,255,0),
     pygame.Color(255,0,255),
     pygame.Color(0,255,255),
+    pygame.Color(127,127,127),
+    pygame.Color(255,127,0),
 ]
 # pygame.FULLSCREEN
 print(tuple(map(lambda i, j: i - j, pygame.display.get_desktop_sizes()[0], (10,10))))
@@ -70,7 +74,7 @@ def turtle_move(turtle1):
         turtle1=tuple(t)
     return turtle1
 def turtle_display(turtle2):
-    pygame.draw.rect(DISPLAYSURF,COLOURS[colourused],(list(turtle2)[0],list(turtle2)[1],size,size),0)
+    pygame.draw.rect(DISPLAYSURF,COLOURS[colourused],(int(list(turtle2)[0]-size/2),int(list(turtle2)[1]-size/2),size,size),0)
 def colourchanging():
     global colourused, pressed_keys
     if pressed_keys[K_1]:
@@ -94,7 +98,10 @@ def colourchanging():
     if pressed_keys[K_0]:
         colourused = 9
 DISPLAYSURF.fill(WHITE)
-
+def HUD():
+    pygame.draw.rect(DISPLAYSURF,COLOURS[8],(0,0,LIST_DISPLAY_SIZE[0]-2,45),0)
+    text = font.render(str(size), True,(0,0,0))
+    DISPLAYSURF.blit(text, (int((LIST_DISPLAY_SIZE[0]-2)*2/3), 5))
 running  = True
 
 while running: 
@@ -120,6 +127,12 @@ while running:
     for event in pygame.event.get():  
         if event.type == pygame.QUIT:  
            running = False
+        if event.type == MOUSEBUTTONDOWN:
+            clicking = True
+        if event.type == MOUSEBUTTONUP:
+            clicking = False
+    if clicking:        
+        turtle = pygame.mouse.get_pos()
     if pressed_keys[K_p]:
         pygame.display.toggle_fullscreen()
         DISPLAYSURF.fill(WHITE)
@@ -131,7 +144,10 @@ while running:
     if pressed_keys[K_DOWN] and size>0:
         size-=1
         time.sleep(0.125)
+    if pressed_keys[K_b]:
+        DISPLAYSURF.fill(BLACK)
+    HUD()
     pygame.display.update()
-    print(M_w,M_a,M_s,M_d, move)
+    # print(M_w,M_a,M_s,M_d, move)
     M_w,M_a,M_s,M_d= False,False,False,False
     # print(turtle)
