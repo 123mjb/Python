@@ -24,9 +24,21 @@ COLOURS=[
     pygame.Color(127,127,127),
     pygame.Color(255,127,0),
 ]
+COLOURSNOTDOT=[
+    (0,0,0),
+    (255,255,255),
+    (255,0,0),
+    (0,255,0),
+    (0,0,255),
+    (255,255,0),
+    (255,0,255),
+    (0,255,255),
+    (127,127,127),
+    (255,127,0)
+]
 # pygame.FULLSCREEN
 print(tuple(map(lambda i, j: i - j, pygame.display.get_desktop_sizes()[0], (10,10))))
-turtle = (0,0)
+turtle = (10,10)
 pygame.display.set_caption("Draw")
 icon = pygame.image.load("Python/R.png")
 pygame.display.set_icon(icon)
@@ -37,6 +49,7 @@ M_s=False
 M_d=False
 randommove=False
 size=5
+checker = True
 
 def turtle_randommove():
     move = r.randrange(0,3)
@@ -55,23 +68,36 @@ def turtle_move(turtle1):
     if pressed_keys[K_a]or M_a==True:
         t=list(turtle1)
         if t[0]>0 and t[0]<LIST_DISPLAY_SIZE[0]-6:
-            t[0]-=1
+            if randommove:
+                t[0]-=size
+            else:
+                t[0]-=1
         turtle1=tuple(t)
     if pressed_keys[K_d] or M_d==True:
         t=list(turtle1)
         if t[0]>-1 and t[0]<LIST_DISPLAY_SIZE[0]-7:
-            t[0]+=1
+            if randommove:
+                t[0]+=size
+            else:
+                t[0]+=1
         turtle1=tuple(t)
     if pressed_keys[K_s] or M_s==True:
         t=list(turtle1)
         if t[1]>-1 and t[1]<LIST_DISPLAY_SIZE[1]-75:
-            t[1]+=1
+            if randommove:
+                t[1]+=size
+            else:
+                t[1]+=1
         turtle1=tuple(t)
     if pressed_keys[K_w] or M_w==True:
         t=list(turtle1)
         if t[1]>0 and t[1]<LIST_DISPLAY_SIZE[1]-74:
-            t[1]-=1
+            if randommove:
+                t[1]-=size
+            else:
+                t[1]-=1
         turtle1=tuple(t)
+    time.sleep(1)
     return turtle1
 def turtle_display(turtle2):
     pygame.draw.rect(DISPLAYSURF,COLOURS[colourused],(int(list(turtle2)[0]-size/2),int(list(turtle2)[1]-size/2),size,size),0)
@@ -111,15 +137,29 @@ while running:
         elif not randommove: randommove=True
         time.sleep(1)
     if randommove:
-        move = r.randrange(0,4)
-        if move == 0:
-            M_w = True
-        elif move == 1:
-            M_a = True
-        elif move == 2:
-            M_s = True
-        elif move == 3:
-            M_d = True
+        while checker:
+            move = r.randrange(0,4)
+            if move == 0:
+                if list(turtle)[1]>0+size:
+                    if DISPLAYSURF.get_at((list(turtle)[0]-(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                        checker = False
+                        M_w = True
+            elif move == 1:
+                if list(turtle)[0]>0+size:
+                    if DISPLAYSURF.get_at((list(turtle)[1]-(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                        checker = False
+                        M_a = True
+            elif move == 2:
+                if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(75+size):
+                    if DISPLAYSURF.get_at((list(turtle)[0]+(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                        checker = False
+                        M_s = True
+            elif move == 3:
+                if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(7+size):
+                    if DISPLAYSURF.get_at((list(turtle)[1]+(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                        checker = False
+                        M_d = True
+        checker = True
     # DISPLAYSURF.fill(WHITE)
     colourchanging()
     turtle = turtle_move(turtle)
@@ -149,5 +189,6 @@ while running:
     HUD()
     pygame.display.update()
     # print(M_w,M_a,M_s,M_d, move)
+    # print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURS[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURS[colourused] )
     M_w,M_a,M_s,M_d= False,False,False,False
     # print(turtle)
