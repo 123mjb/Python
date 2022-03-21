@@ -97,7 +97,6 @@ def turtle_move(turtle1):
             else:
                 t[1]-=1
         turtle1=tuple(t)
-    time.sleep(1)
     return turtle1
 def turtle_display(turtle2):
     pygame.draw.rect(DISPLAYSURF,COLOURS[colourused],(int(list(turtle2)[0]-size/2),int(list(turtle2)[1]-size/2),size,size),0)
@@ -141,22 +140,22 @@ while running:
             move = r.randrange(0,4)
             if move == 0:
                 if list(turtle)[1]>0+size:
-                    if DISPLAYSURF.get_at((list(turtle)[0]-(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_w = True
             elif move == 1:
                 if list(turtle)[0]>0+size:
-                    if DISPLAYSURF.get_at((list(turtle)[1]-(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[1]-(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_a = True
             elif move == 2:
                 if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(75+size):
-                    if DISPLAYSURF.get_at((list(turtle)[0]+(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0]+(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_s = True
             elif move == 3:
                 if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(7+size):
-                    if DISPLAYSURF.get_at((list(turtle)[1]+(size+0),list(turtle)[1]))!=COLOURS[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[1]+(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_d = True
         checker = True
@@ -189,6 +188,6 @@ while running:
     HUD()
     pygame.display.update()
     # print(M_w,M_a,M_s,M_d, move)
-    # print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURS[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURS[colourused] )
+    print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURSNOTDOT[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURSNOTDOT[colourused] )
     M_w,M_a,M_s,M_d= False,False,False,False
     # print(turtle)
