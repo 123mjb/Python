@@ -48,7 +48,7 @@ M_a=False
 M_s=False
 M_d=False
 randommove=False
-size=5
+size=4
 checker = True
 
 def turtle_randommove():
@@ -73,7 +73,7 @@ def turtle_move(turtle1):
             else:
                 t[0]-=1
         turtle1=tuple(t)
-    if pressed_keys[K_d] or M_d==True:
+    if pressed_keys[K_d] or M_d:
         t=list(turtle1)
         if t[0]>-1 and t[0]<LIST_DISPLAY_SIZE[0]-7:
             if randommove:
@@ -81,7 +81,7 @@ def turtle_move(turtle1):
             else:
                 t[0]+=1
         turtle1=tuple(t)
-    if pressed_keys[K_s] or M_s==True:
+    if pressed_keys[K_s] or M_s:
         t=list(turtle1)
         if t[1]>-1 and t[1]<LIST_DISPLAY_SIZE[1]-75:
             if randommove:
@@ -89,7 +89,7 @@ def turtle_move(turtle1):
             else:
                 t[1]+=1
         turtle1=tuple(t)
-    if pressed_keys[K_w] or M_w==True:
+    if pressed_keys[K_w] or M_w:
         t=list(turtle1)
         if t[1]>0 and t[1]<LIST_DISPLAY_SIZE[1]-74:
             if randommove:
@@ -140,25 +140,26 @@ while running:
             move = r.randrange(0,4)
             if move == 0:
                 if list(turtle)[1]>0+size:
-                    if DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[0]-(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_w = True
             elif move == 1:
                 if list(turtle)[0]>0+size:
-                    if DISPLAYSURF.get_at((list(turtle)[1]-(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0]-(size),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_a = True
             elif move == 2:
                 if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(75+size):
-                    if DISPLAYSURF.get_at((list(turtle)[0]+(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[1]+(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_s = True
             elif move == 3:
-                if list(turtle)[1]<LIST_DISPLAY_SIZE[1]-(7+size):
-                    if DISPLAYSURF.get_at((list(turtle)[1]+(size+1),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
+                if list(turtle)[0]<LIST_DISPLAY_SIZE[0]-(7+size):
+                    if DISPLAYSURF.get_at((list(turtle)[0]+(size),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_d = True
         checker = True
+        time.sleep(0.25)
     # DISPLAYSURF.fill(WHITE)
     colourchanging()
     turtle = turtle_move(turtle)
