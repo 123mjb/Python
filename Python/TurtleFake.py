@@ -1,6 +1,6 @@
 import pygame
 from pygame import *
-import random as r
+import random as r 
 import time
 pygame.init()
 DISPLAY_SIZE = pygame.display.get_desktop_sizes()[0]
@@ -12,6 +12,7 @@ WHITE = pygame.Color(255,255,255)
 BLACK = pygame.Color(0,0,0)
 colourused = 0
 clicking=False
+timeschecked=0
 COLOURS=[
     pygame.Color(0,0,0),
     pygame.Color(255,255,255),
@@ -140,7 +141,7 @@ while running:
             move = r.randrange(0,4)
             if move == 0:
                 if list(turtle)[1]>0+size:
-                    if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[0]-(size)))!=COLOURSNOTDOT[colourused]:
+                    if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[1]-(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_w = True
             elif move == 1:
@@ -158,8 +159,13 @@ while running:
                     if DISPLAYSURF.get_at((list(turtle)[0]+(size),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_d = True
+            timeschecked+=1
+            if timeschecked==64:
+                turtle = (r.randrange(1/2*size,LIST_DISPLAY_SIZE[0]-7,size),r.randrange(1/2*size,LIST_DISPLAY_SIZE[1]-7,size))
+                checker=False
         checker = True
-        time.sleep(0.25)
+        timeschecked=0
+        # time.sleep(0.25)
     # DISPLAYSURF.fill(WHITE)
     colourchanging()
     turtle = turtle_move(turtle)
@@ -189,6 +195,6 @@ while running:
     HUD()
     pygame.display.update()
     # print(M_w,M_a,M_s,M_d, move)
-    print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURSNOTDOT[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURSNOTDOT[colourused] )
+    # print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURSNOTDOT[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURSNOTDOT[colourused] )
     M_w,M_a,M_s,M_d= False,False,False,False
     # print(turtle)
