@@ -11,8 +11,10 @@ font = pygame.font.SysFont('Tahoma', 30, False, False)
 WHITE = pygame.Color(255,255,255) 
 BLACK = pygame.Color(0,0,0)
 colourused = 0
+size=4
 clicking=False
 timeschecked=0
+heightofhud=45
 COLOURS=[
     pygame.Color(0,0,0),
     pygame.Color(255,255,255),
@@ -39,7 +41,7 @@ COLOURSNOTDOT=[
 ]
 # pygame.FULLSCREEN
 print(tuple(map(lambda i, j: i - j, pygame.display.get_desktop_sizes()[0], (10,10))))
-turtle = (10,10)
+turtle = (size/2,heightofhud+size/2)
 pygame.display.set_caption("Draw")
 icon = pygame.image.load("Python/R.png")
 pygame.display.set_icon(icon)
@@ -49,7 +51,6 @@ M_a=False
 M_s=False
 M_d=False
 randommove=False
-size=4
 checker = True
 
 def turtle_randommove():
@@ -68,7 +69,7 @@ def turtle_move(turtle1):
     pressed_keys = pygame.key.get_pressed()
     if pressed_keys[K_a]or M_a==True:
         t=list(turtle1)
-        if t[0]>0 and t[0]<LIST_DISPLAY_SIZE[0]-6:
+        if t[0]>0 and t[0]<LIST_DISPLAY_SIZE[0]-3:
             if randommove:
                 t[0]-=size
             else:
@@ -76,7 +77,7 @@ def turtle_move(turtle1):
         turtle1=tuple(t)
     if pressed_keys[K_d] or M_d:
         t=list(turtle1)
-        if t[0]>-1 and t[0]<LIST_DISPLAY_SIZE[0]-7:
+        if t[0]>-1 and t[0]<LIST_DISPLAY_SIZE[0]-4:
             if randommove:
                 t[0]+=size
             else:
@@ -84,7 +85,7 @@ def turtle_move(turtle1):
         turtle1=tuple(t)
     if pressed_keys[K_s] or M_s:
         t=list(turtle1)
-        if t[1]>-1 and t[1]<LIST_DISPLAY_SIZE[1]-75:
+        if t[1]>heightofhud-1+size/2 and t[1]<LIST_DISPLAY_SIZE[1]-72:
             if randommove:
                 t[1]+=size
             else:
@@ -92,7 +93,7 @@ def turtle_move(turtle1):
         turtle1=tuple(t)
     if pressed_keys[K_w] or M_w:
         t=list(turtle1)
-        if t[1]>0 and t[1]<LIST_DISPLAY_SIZE[1]-74:
+        if t[1]>heightofhud+size/2 and t[1]<LIST_DISPLAY_SIZE[1]-71:
             if randommove:
                 t[1]-=size
             else:
@@ -125,7 +126,7 @@ def colourchanging():
         colourused = 9
 DISPLAYSURF.fill(WHITE)
 def HUD():
-    pygame.draw.rect(DISPLAYSURF,COLOURS[8],(0,0,LIST_DISPLAY_SIZE[0]-2,45),0)
+    pygame.draw.rect(DISPLAYSURF,COLOURS[8],(0,0,LIST_DISPLAY_SIZE[0]-2,heightofhud),0)
     text = font.render(str(size), True,(0,0,0))
     DISPLAYSURF.blit(text, (int((LIST_DISPLAY_SIZE[0]-2)*2/3), 5))
 running  = True
@@ -140,12 +141,12 @@ while running:
         while checker:
             move = r.randrange(0,4)
             if move == 0:
-                if list(turtle)[1]>0+size:
+                if list(turtle)[1]>heightofhud+size:
                     if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[1]-(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_w = True
             elif move == 1:
-                if list(turtle)[0]>0+size:
+                if list(turtle)[0]>heightofhud+size:
                     if DISPLAYSURF.get_at((list(turtle)[0]-(size),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_a = True
@@ -161,7 +162,7 @@ while running:
                         M_d = True
             timeschecked+=1
             if timeschecked==64:
-                turtle = (r.randrange(1/2*size,LIST_DISPLAY_SIZE[0]-7,size),r.randrange(1/2*size,LIST_DISPLAY_SIZE[1]-7,size))
+                turtle = (r.randrange(heightofhud+1/2*size,LIST_DISPLAY_SIZE[0]-7,size),r.randrange(heightofhud+1/2*size,LIST_DISPLAY_SIZE[1]-7,size))
                 checker=False
         checker = True
         timeschecked=0
