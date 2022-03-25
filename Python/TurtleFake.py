@@ -7,7 +7,6 @@ DISPLAY_SIZE = pygame.display.get_desktop_sizes()[0]
 LIST_DISPLAY_SIZE = list(DISPLAY_SIZE)
 DISPLAYSURF = pygame.display.set_mode(tuple(map(lambda i, j: i - j, DISPLAY_SIZE, (2,60))),pygame.RESIZABLE)
 # pygame.display.toggle_fullscreen()
-font = pygame.font.SysFont('Tahoma', 30, False, False)
 WHITE = pygame.Color(255,255,255) 
 BLACK = pygame.Color(0,0,0)
 colourused = 0
@@ -15,6 +14,7 @@ size=4
 clicking=False
 timeschecked=0
 heightofhud=45
+font = pygame.font.SysFont('Tahoma', int(2/3*heightofhud), False, False)
 COLOURS=[
     pygame.Color(0,0,0),
     pygame.Color(255,255,255),
@@ -122,8 +122,8 @@ DISPLAYSURF.fill(WHITE)
 # HUD drawing
 def HUD():
     pygame.draw.rect(DISPLAYSURF,COLOURS[8],(0,0,LIST_DISPLAY_SIZE[0]-2,heightofhud),0)
-    text = font.render(str(size), True,(0,0,0))
-    DISPLAYSURF.blit(text, (int((LIST_DISPLAY_SIZE[0]-2)*2/3), 5))
+    text = font.render(f"Size:{str(size)}", True,(0,0,0))
+    DISPLAYSURF.blit(text, (int((LIST_DISPLAY_SIZE[0]-2)*2/3), int(1/10*heightofhud)))
 running  = True
 
 # running
@@ -138,19 +138,18 @@ while running:
     if randommove:
         while checker:
             move = r.randrange(0,4)
-            print(turtle,move,LIST_DISPLAY_SIZE)
             if move == 0:
                 if list(turtle)[1]>heightofhud+3/2*size:
                     if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[1]-(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_w = True
             elif move == 1:
-                if list(turtle)[0]>heightofhud+3/2*size:
+                if list(turtle)[0]>3/2*size:
                     if DISPLAYSURF.get_at((list(turtle)[0]-(size),list(turtle)[1]))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_a = True
             elif move == 2:
-                if list(turtle)[1]<int(LIST_DISPLAY_SIZE[1]-(75+3/2*size)):
+                if list(turtle)[1]<int(LIST_DISPLAY_SIZE[1]-(65+3/2*size)):
                     if DISPLAYSURF.get_at((list(turtle)[0],list(turtle)[1]+(size)))!=COLOURSNOTDOT[colourused]:
                         checker = False
                         M_s = True
@@ -161,48 +160,30 @@ while running:
                         M_d = True
             timeschecked+=1
             if timeschecked==64:
-                turtle = (r.randrange(heightofhud+1/2*size,LIST_DISPLAY_SIZE[0]-7,size),r.randrange(heightofhud+1/2*size,LIST_DISPLAY_SIZE[1]-77,size))
+                turtle = (r.randrange(int(heightofhud+1/2*size),LIST_DISPLAY_SIZE[0]-7,size),r.randrange(int(heightofhud+1/2*size),LIST_DISPLAY_SIZE[1]-77,size))
                 checker=False
-        checker = True
-        timeschecked=0
-        # time.sleep(0.25)
+        checker = True;timeschecked=0
     
-    # DISPLAYSURF.fill(WHITE)
-
     colourchanging()
-
     turtle = turtle_move(turtle)
-
     turtle_display(turtle)
 
     for event in pygame.event.get():  
-        if event.type == pygame.QUIT:  
-           running = False
-        if event.type == MOUSEBUTTONDOWN:
-            clicking = True
-        if event.type == MOUSEBUTTONUP:
-            clicking = False
+        if event.type == pygame.QUIT:  running = False
+        if event.type == MOUSEBUTTONDOWN:clicking = True
+        if event.type == MOUSEBUTTONUP:clicking = False
 
-    if clicking:        
-        turtle = pygame.mouse.get_pos()
+    if clicking:turtle = pygame.mouse.get_pos()
 
-    if pressed_keys[K_p]:
-        pygame.display.toggle_fullscreen()
-        DISPLAYSURF.fill(WHITE)
+    if pressed_keys[K_p]:pygame.display.toggle_fullscreen();DISPLAYSURF.fill(WHITE)
 
-    if pressed_keys[K_c]:
-        DISPLAYSURF.fill(WHITE)
+    if pressed_keys[K_c]:DISPLAYSURF.fill(WHITE)
 
-    if pressed_keys[K_UP] and size<100:
-        size+=1
-        time.sleep(0.125)
+    if pressed_keys[K_UP] and size<100:size+=1;time.sleep(0.125)
 
-    if pressed_keys[K_DOWN] and size>0:
-        size-=1
-        time.sleep(0.125)
+    if pressed_keys[K_DOWN] and size>0:size-=1;time.sleep(0.125)
 
-    if pressed_keys[K_b]:
-        DISPLAYSURF.fill(BLACK)
+    if pressed_keys[K_b]:DISPLAYSURF.fill(BLACK)
 
     HUD()
 
