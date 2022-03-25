@@ -15,31 +15,9 @@ clicking=False
 timeschecked=0
 heightofhud=45
 font = pygame.font.SysFont('Tahoma', int(2/3*heightofhud), False, False)
-COLOURS=[
-    pygame.Color(0,0,0),
-    pygame.Color(255,255,255),
-    pygame.Color(255,0,0),
-    pygame.Color(0,255,0),
-    pygame.Color(0,0,255),
-    pygame.Color(255,255,0),
-    pygame.Color(255,0,255),
-    pygame.Color(0,255,255),
-    pygame.Color(127,127,127),
-    pygame.Color(255,127,0),
-]
-COLOURSNOTDOT=[
-    (0,0,0),
-    (255,255,255),
-    (255,0,0),
-    (0,255,0),
-    (0,0,255),
-    (255,255,0),
-    (255,0,255),
-    (0,255,255),
-    (127,127,127),
-    (255,127,0)
-]
-# pygame.FULLSCREEN
+COLOURS=[pygame.Color(0,0,0),pygame.Color(255,255,255),pygame.Color(255,0,0),pygame.Color(0,255,0),pygame.Color(0,0,255),pygame.Color(255,255,0),pygame.Color(255,0,255),pygame.Color(0,255,255),pygame.Color(127,127,127),pygame.Color(255,127,0),]
+COLOURSNOTDOT=[(0,0,0),(255,255,255),(255,0,0),(0,255,0),(0,0,255),(255,255,0),(255,0,255),(0,255,255),(127,127,127),(255,127,0)]
+NAMEOFCOLOURS=["Black","White","Red","Green","Blue","Yellow","Magenta","Cyan","Gray","Orange"]
 print(tuple(map(lambda i, j: i - j, pygame.display.get_desktop_sizes()[0], (10,10))))
 turtle = (int(size/2),int(heightofhud+size/2))
 pygame.display.set_caption("Draw")
@@ -122,8 +100,13 @@ DISPLAYSURF.fill(WHITE)
 # HUD drawing
 def HUD():
     pygame.draw.rect(DISPLAYSURF,COLOURS[8],(0,0,LIST_DISPLAY_SIZE[0]-2,heightofhud),0)
-    text = font.render(f"Size:{str(size)}", True,(0,0,0))
-    DISPLAYSURF.blit(text, (int((LIST_DISPLAY_SIZE[0]-2)*2/3), int(1/10*heightofhud)))
+    sizetext = font.render(f"Size:{str(size)}", True,(0,0,0))
+    DISPLAYSURF.blit(sizetext, (int((LIST_DISPLAY_SIZE[0]-2)*1/2), int(1/10*heightofhud)))
+    colourtext = font.render(f"Colour:{NAMEOFCOLOURS[colourused]}", True,(0,0,0))
+    DISPLAYSURF.blit(colourtext, (int((LIST_DISPLAY_SIZE[0]-2)*2/18), int(1/10*heightofhud)))
+    xytext = font.render(f"Location:{list(turtle)[0]},{list(turtle)[1]}", True,(0,0,0))
+    DISPLAYSURF.blit(xytext, (int((LIST_DISPLAY_SIZE[0]-2)*15/18), int(1/10*heightofhud)))
+
 running  = True
 
 # running
@@ -184,12 +167,6 @@ while running:
     if pressed_keys[K_DOWN] and size>0:size-=1;time.sleep(0.125)
 
     if pressed_keys[K_b]:DISPLAYSURF.fill(BLACK)
-
     HUD()
-
     pygame.display.update()
-
-    # print(M_w,M_a,M_s,M_d, move)
-    # print(DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1])),COLOURSNOTDOT[colourused],DISPLAYSURF.get_at((list(turtle)[0]-(size+1),list(turtle)[1]))==COLOURSNOTDOT[colourused] )
     M_w,M_a,M_s,M_d= False,False,False,False
-    # print(turtle)
