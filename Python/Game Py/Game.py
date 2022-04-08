@@ -30,7 +30,7 @@ font_small = pygame.font.SysFont("Verdana", 20)
 p1_win = font.render("Player 1 Won", True, BLACK)
 p2_win = font.render("Player 2 Won", True, BLACK)
 
-background = pygame.image.load("AnimatedStreet.png")
+background = pygame.image.load("Python\Game Py\AnimatedStreet.png")
 
 #Create a white screen 
 DISPLAYSURF = pygame.display.set_mode((800,600))
@@ -41,7 +41,7 @@ pygame.display.set_caption("Game")
 class Enemy(pygame.sprite.Sprite):
       def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Enemy.png")
+        self.image = pygame.image.load("Python\Game Py\Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40,SCREEN_WIDTH-40), 0)
 
@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
 class Enemy2(pygame.sprite.Sprite):
       def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Enemy.png")
+        self.image = pygame.image.load("Python\Game Py\Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(SCREEN_WIDTH + 40,800-40), 0)
 
@@ -70,7 +70,7 @@ class Enemy2(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Player.png")
+        self.image = pygame.image.load("Python\Game Py\Player.png")
         self.rect = self.image.get_rect()
         self.rect.center = (160, 520)
        
@@ -86,7 +86,7 @@ class Player(pygame.sprite.Sprite):
 class Player2(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Player.png")
+        self.image = pygame.image.load("Python\Game Py\Player.png")
         self.rect = self.image.get_rect()
         self.rect.center = (560, 520)
        
@@ -148,7 +148,7 @@ while True:
 
     #To be run if collision occurs between Player and Enemy
     if pygame.sprite.spritecollideany(P1, enemies):
-          pygame.mixer.Sound('crash.wav').play()
+          pygame.mixer.Sound('Python\Game Py\crash.wav').play()
           time.sleep(1)
                    
           DISPLAYSURF.fill(RED)
@@ -161,7 +161,7 @@ while True:
           pygame.quit()
           sys.exit()
     if pygame.sprite.spritecollideany(P2, enemies):
-          pygame.mixer.Sound('crash.wav').play()
+          pygame.mixer.Sound('Python\Game Py\crash.wav').play()
           time.sleep(1)
                    
           DISPLAYSURF.fill(RED)
